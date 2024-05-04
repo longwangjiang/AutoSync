@@ -1,7 +1,4 @@
 #EXTM3U url-tvg="https://i.mjh.nz/SamsungTVPlus/all.xml"
-#EXT-X-APP APTV
-#EXT-X-APTV-TYPE local
-
 #EXTINF:-1 tvg-id="GBBC2300003ZQ" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GBBC2300003ZQ_20220608T011330SQUARE.png_20220608011332.png" group-title="United Kingdom",Entertainment Hub
 https://i.mjh.nz/SamsungTVPlus/GBBC2300003ZQ.m3u8
 #EXTINF:-1 tvg-id="GBBD4100010H1" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GBBD4100010H1_20240214T034903SQUARE.png_20240214034903.png" group-title="United Kingdom",Crime Network
