@@ -99,6 +99,8 @@ http://live.cooltv.top/tv/news1296.php?id=4
 http://hls.njgb.com/live_hls/8/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/HBWYGB.png" group-title="综合广播",河北文艺广播
 http://satellitepull.cnr.cn/live/wxhebwygb/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://cdn-profiles.tunein.com/s138074/images/logog.png?t=158317" group-title="网络广播",中文流行
+http://cpop.bigbradio.net/s
 #EXTINF:-1 tvg-logo="https://live.fanmingming.com/radio/全国广播.png" group-title="网络广播",全国广播
 http://stream.rcs.revma.com/044q61ha7a0uv/hls.m3u8
 #EXTINF:-1 tvg-logo="https://cmsres.dianzhenkeji.com/files/images/2017/12/14/1513241848889285.png" group-title="网络广播",天籁古典
