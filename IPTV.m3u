@@ -56,11 +56,11 @@ http://[2409:8087:4c0a:22:1::11]:6410/170000001115/UmaiCHAN63807743b61bb/1.m3u8?
 #EXTINF:-1 tvg-logo="https://echolin73.github.io/logo/tvg-logo-kodi/CCTVwenhuajingpin.png" group-title="央视",文化精品
 http://mail.petzhu.top:7000/rtp/239.254.201.229:7260
 #EXTINF:-1 tvg-id="111" tvg-name="凤凰中文" tvg-logo="http://epg.51zmt.top:8000/tb1/gt/fenghuangzhongwen.png" group-title="卫视",凤凰中文
-http://113.64.145.195:8081/hls/37/index.m3u8
+http://117.27.190.42:9998/tsfile/live/23280_1.m3u8
 #EXTINF:-1 tvg-id="112" tvg-name="凤凰资讯" tvg-logo="http://epg.51zmt.top:8000/tb1/gt/fenghuangzixun.png" group-title="卫视",凤凰资讯
-http://113.64.145.195:8081/hls/36/index.m3u8
+http://117.27.190.42:9998/tsfile/live/23279_1.m3u8
 #EXTINF:-1 tvg-id="113" tvg-name="凤凰香港" tvg-logo="https://live.fanmingming.com/tv/fenghuangxianggang.png" group-title="卫视",凤凰香港
-http://113.64.145.195:8081/hls/38/index.m3u8
+https://epg.pw/stream/b3ab43b2415df405226d5b25f38e51432ca7d32b5a240e0aa1f3e201d181442f.m3u8
 #EXTINF:-1 tvg-id="北京卫视" tvg-name="北京卫视" tvg-logo="https://live.fanmingming.com/tv/北京卫视.png" group-title="卫视",北京卫视
 http://[2409:8087:1a01:df::7005]:80/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226450/index.m3u8
 #EXTINF:-1 tvg-id="东方卫视" tvg-name="东方卫视" tvg-logo="https://live.fanmingming.com/tv/东方卫视.png" group-title="卫视",东方卫视
@@ -247,12 +247,6 @@ http://[2409:8087:5e08:24::12]:6610/000000001000/2000000004000000008/index.m3u8?
 http://[2409:8087:5e08:24::12]:6610/000000001000/2000000004000000009/index.m3u8?stbId=3&livemode=1&HlsProfileId=&channel-id=hnbblive&Contentid=2000000004000000009&IASHttpSessionId=OTT19019320240419154124000281
 #EXTINF:-1 tvg-id="227" tvg-name="文物宝库" tvg-logo="https://cdn.jsdelivr.net/gh/youngking525/TVlogo@main/img/wwbk.png" group-title="数字",文物宝库
 http://[2409:8087:4c0a:22:1::11]:6410/170000001115/UmaiCHAN638078a346161/index.m3u8?AuthInfo=toEYVdLfxymUP2l9NZpQI5%2BK6T7j%2FlRm%2BvbM9VO7bA199v9hZiIrZ%2B5X675R6%2FGDjgcqn5UaJ6D814KM9%2FvF7QwvFfeEXMAK7LltfEC%2FKQQ
-#EXTINF:-1 tvg-id="360" tvg-name="古装剧场" tvg-logo="https://gitee.com/Black_crow/epglogo/raw/master/NewTV/NewTV04.png" group-title="数字",古装剧场
-http://[2409:8087:1a01:df::7005]/PLTV/88888888/224/3221225524/index.m3u8
-#EXTINF:-1 tvg-id="350" tvg-name="动作电影" tvg-logo="https://gitee.com/Black_crow/epglogo/raw/master/NewTV/NewTV03.png" group-title="数字",动作电影
-http://[2409:8087:1a01:df::7005]/PLTV/88888888/224/3221225555/index.m3u8
-#EXTINF:-1 tvg-id="430" tvg-name="农业致富" tvg-logo="https://gitee.com/Black_crow/epglogo/raw/master/NewTV/NewTV08.png" group-title="数字",农业致富
-http://[2409:8087:1a01:df::7005]/PLTV/88888888/224/3221225552/index.m3u8
 #EXTINF:-1 tvg-id="梨园" tvg-name="梨园" tvg-logo="https://live.fanmingming.com/tv/河南梨园.png" group-title="数字",梨园频道
 http://[2409:8087:4c0a:22:1::11]:6410/170000001115/UmaiCHAN6380788ba7bed/index.m3u8?AuthInfo=toEYVdLfxymUP2l9NZpQI5%2BK6T7j%2FlRm%2BvbM9VO7bA0q1S1k1f36SqqriM0FZoFSAJRfCt8SS7X6sTRmXb81a8O4H%2FdroDKjLoDeaMQdyJQ
 #EXTINF:-1 tvg-id="newtv超级体育" tvg-name="newtv超级体育" tvg-logo="https://live.fanmingming.com/tv/NEWTV超级体育.png" group-title="数字",超级体育
