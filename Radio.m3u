@@ -81,9 +81,9 @@ https://radio.pull.hebtv.com/live/hebqcyy.m3u8
 http://satellitepull.cnr.cn/live/wxsxxyygb/playlist.m3u8
 #EXTINF:-1 tvg-id="广州汽车音乐电台" tvg-name="广州汽车音乐电台" tvg-logo="https://img-ossimg-qn.ajmide.com/program/29715-1GGmaZ_550x550.jpg" group-title="音乐广播",广州汽车音乐
 https://rscdn-qn-i.ajmide.com/r_1088/1088.m3u8
-#EXTINF:-1 tvg-id="深圳音乐广播" tvg-name="音乐广播" tvg-logo="https://img-ossimg-qn.ajmide.com/program/1EGoGw.png" group-title="音乐广播",深圳音乐广播
+#EXTINF:-1 tvg-id="深圳音乐广播" tvg-name="深圳音乐广播" tvg-logo="https://img-ossimg-qn.ajmide.com/program/1EGoGw.png" group-title="音乐广播",深圳音乐广播
 https://rscdn-qn-i.ajmide.com/r_1380/1380.m3u8
-#EXTINF:-1 group-title="音乐广播",新疆音乐广播
+#EXTINF:-1 tvg-id="新疆音乐广播" tvg-name="新疆音乐广播" tvg-logo="https://epg.112114.xyz/logo/xjyygb.png" group-title="音乐广播",新疆音乐广播
 http://ls.qingting.fm/live/4029.m3u8
 #EXTINF:-1 tvg-logo="http://pic.qtfm.cn/2022/1212/20221212113007.jpeg" group-title="音乐广播",江西故事广播
 http://live02.jxtvcn.com.cn/live-jxtvcn/jxtv_myfm969.m3u8
