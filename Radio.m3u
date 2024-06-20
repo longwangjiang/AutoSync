@@ -139,8 +139,8 @@ http://voa-ingest.akamaized.net/hls/live/2035206/151_124L/playlist.m3u8
 http://mediaprima.rastream.com/mediaprima-onefm
 #EXTINF:-1 tvg-logo="http://live.cooltv.top/logo/inews.png" group-title="境外广播",BCC中广新闻 
 http://n12.rcs.revma.com/78fm9wyy2tzuv
-#EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/FM987.png" group-title="境外广播",FM 987
-http://playerservices.streamtheworld.com/api/livestream-redirect/987FMAAC.aac
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/itszairi/FreeviewMY/main/channel-logos/radio/local/988fm.png" group-title="境外广播",FM 988
+https://playerservices.streamtheworld.com/api/livestream-redirect/988_FMAAC
 #EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/GOLDFM.png"group-title="境外广播",Gold FM
 http://22903.live.streamtheworld.com:3690/GOLD905_PREM.aac
 #EXTINF:-1 tvg-logo="https://epg.112114.xyz/logo/MONEYFM.png"group-title="境外广播",Money FM
