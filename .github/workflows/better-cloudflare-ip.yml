@@ -1,10 +1,8 @@
 name: better-cloudflare-ip
 on:
   schedule:
-    - cron: '21 23 * * *'
+    - cron: '47 14 * * *'
   workflow_dispatch:
-  watch:
-    types: started
   repository_dispatch:
     types: sync-better-cloudflare-ip
 jobs:
@@ -49,7 +47,7 @@ jobs:
               sha: context.sha
             });
 
-      - name: sync better-cloudflare-ip
+      - name: Sync branch
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
