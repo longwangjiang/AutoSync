@@ -1,12 +1,10 @@
-name: reinstall
+name: bin456789-reinstall
 on:
   schedule:
-    - cron: '20 7 * * *'
+    - cron: '1 6 * * *'
   workflow_dispatch:
-  watch:
-    types: started
   repository_dispatch:
-    types: sync-reinstall
+    types: sync-bin456789-reinstall
 jobs:
   repo-sync:
     env:
@@ -14,26 +12,36 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout the repository
+        uses: actions/checkout@v2
         with:
           persist-credentials: false
 
-      - name: Create new branch
-        uses: actions/github-script@v6
-        with:
-          script: |
-            await github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: 'refs/heads/reinstall',
-              sha: context.sha
-            });
+      - name: Check if branch exists
+        id: check_branch
+        run: |
+          if git show-ref --verify --quiet refs/heads/reinstall; then
+            echo "branch_exists=true" >> $GITHUB_ENV
+          else:
+            echo "branch_exists=false" >> $GITHUB_ENV
+          fi
 
-      - name: sync reinstall
+      - name: Delete existing branch
+        if: ${{ env.branch_exists == 'true' }}
+        run: |
+          git push origin --delete reinstall
+
+      - name: Create new branch
+        if: ${{ env.branch_exists == 'false' }}
+        run: |
+          git checkout -b reinstall
+          git push --set-upstream origin reinstall
+
+      - name: Sync branch
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
           source_repo: "https://github.com/bin456789/reinstall"
-          source_branch: "main"
+          source_branch: "master"
           destination_branch: "bin456789-reinstall"
           github_token: ${{ secrets.PAT }}
