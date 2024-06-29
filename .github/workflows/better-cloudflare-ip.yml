@@ -1,7 +1,7 @@
 name: better-cloudflare-ip
 on:
   schedule:
-    - cron: '47 14 * * *'
+    - cron: '43 17 * * *'
   workflow_dispatch:
   repository_dispatch:
     types: sync-better-cloudflare-ip
@@ -21,31 +21,19 @@ jobs:
         run: |
           if git show-ref --verify --quiet refs/heads/better-cloudflare-ip; then
             echo "branch_exists=true" >> $GITHUB_ENV
-          else
+          else:
             echo "branch_exists=false" >> $GITHUB_ENV
           fi
 
       - name: Delete existing branch
         if: ${{ env.branch_exists == 'true' }}
-        uses: actions/github-script@v6
-        with:
-          script: |
-            await github.rest.git.deleteRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: 'heads/better-cloudflare-ip'
-            });
+        run: |
+          git push origin --delete better-cloudflare-ip
 
       - name: Create new branch
-        uses: actions/github-script@v6
-        with:
-          script: |
-            await github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: 'refs/heads/better-cloudflare-ip',
-              sha: context.sha
-            });
+        run: |
+          git checkout -b better-cloudflare-ip || git checkout better-cloudflare-ip
+          git push origin better-cloudflare-ip
 
       - name: Sync branch
         uses: repo-sync/github-sync@v2
