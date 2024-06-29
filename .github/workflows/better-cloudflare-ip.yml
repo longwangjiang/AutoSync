@@ -1,7 +1,7 @@
 name: better-cloudflare-ip
 on:
   schedule:
-    - cron: '7 19 * * *'
+    - cron: '15 6 * * *'
   workflow_dispatch:
   watch:
     types: started
