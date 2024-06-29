@@ -1,7 +1,7 @@
 name: better-cloudflare-ip
 on:
   schedule:
-    - cron: '20 6 * * *'
+    - cron: '20 8 * * *'
   workflow_dispatch:
   watch:
     types: started
@@ -34,6 +34,6 @@ jobs:
         if: env.PAT
         with:
           source_repo: "https://github.com/badafans/better-cloudflare-ip"
-          source_branch: "main"
+          source_branch: "master"
           destination_branch: "better-cloudflare-ip"
           github_token: ${{ secrets.PAT }}
