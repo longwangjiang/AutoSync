@@ -1,7 +1,7 @@
 name: better-cloudflare-ip
 on:
   schedule:
-    - cron: '15 6 * * *'
+    - cron: '27 17 * * *'
   workflow_dispatch:
   watch:
     types: started
@@ -44,6 +44,11 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            const ref = await github.rest.git.getRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'heads/better-cloudflare-ip'
+            });
             await github.rest.git.updateRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
