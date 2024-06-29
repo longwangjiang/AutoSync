@@ -1,0 +1,47 @@
+name: psub
+on:
+  schedule:
+    - cron: '22 10 * * *'
+  workflow_dispatch:
+  repository_dispatch:
+    types: sync-psub
+jobs:
+  repo-sync:
+    env:
+      PAT: ${{ secrets.PAT }}
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Check if branch exists
+        id: check_branch
+        run: |
+          if git show-ref --verify --quiet refs/heads/psub; then
+            echo "branch_exists=true" >> $GITHUB_ENV
+          else:
+            echo "branch_exists=false" >> $GITHUB_ENV
+          fi
+
+      - name: Delete existing branch
+        if: ${{ env.branch_exists == 'true' }}
+        run: |
+          git push origin --delete psub
+
+      - name: Create new branch
+        if: ${{ env.branch_exists == 'false' }}
+        run: |
+          git checkout -b psub
+          git push --set-upstream origin psub
+
+      - name: Sync branch
+        uses: repo-sync/github-sync@v2
+        if: env.PAT
+        with:
+          source_repo: "https://github.com/bulianglin/psub"
+          source_branch: "main"
+          destination_branch: "psub"
+          github_token: ${{ secrets.PAT }}
