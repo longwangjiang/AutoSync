@@ -1,10 +1,8 @@
 name: iptv
 on:
   schedule:
-    - cron: '23 8 * * *'
+    - cron: '34 1 * * *'
   workflow_dispatch:
-  watch:
-    types: started
   repository_dispatch:
     types: sync-iptv
 jobs:
@@ -14,26 +12,36 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout the repository
+        uses: actions/checkout@v2
         with:
           persist-credentials: false
 
-      - name: Create new branch
-        uses: actions/github-script@v6
-        with:
-          script: |
-            await github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: 'refs/heads/iptv',
-              sha: context.sha
-            });
+      - name: Check if branch exists
+        id: check_branch
+        run: |
+          if git show-ref --verify --quiet refs/heads/iptv; then
+            echo "branch_exists=true" >> $GITHUB_ENV
+          else:
+            echo "branch_exists=false" >> $GITHUB_ENV
+          fi
 
-      - name: sync iptv
+      - name: Delete existing branch
+        if: ${{ env.branch_exists == 'true' }}
+        run: |
+          git push origin --delete iptv
+
+      - name: Create new branch
+        if: ${{ env.branch_exists == 'false' }}
+        run: |
+          git checkout -b iptv
+          git push --set-upstream origin iptv
+
+      - name: Sync branch
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
           source_repo: "https://github.com/iptv-org/iptv"
-          source_branch: "main"
+          source_branch: "master"
           destination_branch: "iptv"
           github_token: ${{ secrets.PAT }}
