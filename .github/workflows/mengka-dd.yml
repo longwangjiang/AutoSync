@@ -1,10 +1,8 @@
 name: dd
 on:
   schedule:
-    - cron: '27 8 * * *'
+    - cron: '13 13 * * *'
   workflow_dispatch:
-  watch:
-    types: started
   repository_dispatch:
     types: sync-mengka-dd
 jobs:
@@ -14,26 +12,36 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout the repository
+        uses: actions/checkout@v2
         with:
           persist-credentials: false
 
-      - name: Create new branch
-        uses: actions/github-script@v6
-        with:
-          script: |
-            await github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: 'refs/heads/dd',
-              sha: context.sha
-            });
+      - name: Check if branch exists
+        id: check_branch
+        run: |
+          if git show-ref --verify --quiet refs/heads/dd; then
+            echo "branch_exists=true" >> $GITHUB_ENV
+          else:
+            echo "branch_exists=false" >> $GITHUB_ENV
+          fi
 
-      - name: sync mengka-dd
+      - name: Delete existing branch
+        if: ${{ env.branch_exists == 'true' }}
+        run: |
+          git push origin --delete dd
+
+      - name: Create new branch
+        if: ${{ env.branch_exists == 'false' }}
+        run: |
+          git checkout -b dd
+          git push --set-upstream origin dd
+
+      - name: Sync branch
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
           source_repo: "https://github.com/veip007/dd"
-          source_branch: "main"
+          source_branch: "master"
           destination_branch: "mengka-dd"
           github_token: ${{ secrets.PAT }}
