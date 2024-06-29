@@ -1,10 +1,8 @@
 name: mi-gpt
 on:
   schedule:
-    - cron: '20 8 * * *'
+    - cron: '51 13 * * *'
   workflow_dispatch:
-  watch:
-    types: started
   repository_dispatch:
     types: sync-mi-gpt
 jobs:
@@ -14,22 +12,32 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout the repository
+        uses: actions/checkout@v2
         with:
           persist-credentials: false
 
-      - name: Create new branch
-        uses: actions/github-script@v6
-        with:
-          script: |
-            await github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: 'refs/heads/mi-gpt',
-              sha: context.sha
-            });
+      - name: Check if branch exists
+        id: check_branch
+        run: |
+          if git show-ref --verify --quiet refs/heads/mi-gpt; then
+            echo "branch_exists=true" >> $GITHUB_ENV
+          else:
+            echo "branch_exists=false" >> $GITHUB_ENV
+          fi
 
-      - name: sync mi-gpt
+      - name: Delete existing branch
+        if: ${{ env.branch_exists == 'true' }}
+        run: |
+          git push origin --delete mi-gpt
+
+      - name: Create new branch
+        if: ${{ env.branch_exists == 'false' }}
+        run: |
+          git checkout -b mi-gpt
+          git push --set-upstream origin mi-gpt
+
+      - name: Sync branch
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
