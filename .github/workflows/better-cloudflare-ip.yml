@@ -1,7 +1,7 @@
 name: better-cloudflare-ip
 on:
   schedule:
-    - cron: '8 22 * * *'
+    - cron: '7 19 * * *'
   workflow_dispatch:
   watch:
     types: started
@@ -37,6 +37,19 @@ jobs:
               repo: context.repo.repo,
               ref: 'refs/heads/better-cloudflare-ip',
               sha: context.sha
+            });
+
+      - name: Update branch
+        if: ${{ env.branch_exists == 'true' }}
+        uses: actions/github-script@v6
+        with:
+          script: |
+            await github.rest.git.updateRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'heads/better-cloudflare-ip',
+              sha: context.sha,
+              force: true
             });
 
       - name: sync better-cloudflare-ip
