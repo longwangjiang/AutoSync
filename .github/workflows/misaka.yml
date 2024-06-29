@@ -1,10 +1,8 @@
 name: misaka
 on:
   schedule:
-    - cron: '29 8 * * *'
+    - cron: '3 9 * * *'
   workflow_dispatch:
-  watch:
-    types: started
   repository_dispatch:
     types: sync-misaka
 jobs:
@@ -14,26 +12,36 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout the repository
+        uses: actions/checkout@v2
         with:
           persist-credentials: false
 
-      - name: Create new branch
-        uses: actions/github-script@v6
-        with:
-          script: |
-            await github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: 'refs/heads/misaka',
-              sha: context.sha
-            });
+      - name: Check if branch exists
+        id: check_branch
+        run: |
+          if git show-ref --verify --quiet refs/heads/misaka; then
+            echo "branch_exists=true" >> $GITHUB_ENV
+          else:
+            echo "branch_exists=false" >> $GITHUB_ENV
+          fi
 
-      - name: sync misaka
+      - name: Delete existing branch
+        if: ${{ env.branch_exists == 'true' }}
+        run: |
+          git push origin --delete misaka
+
+      - name: Create new branch
+        if: ${{ env.branch_exists == 'false' }}
+        run: |
+          git checkout -b misaka
+          git push --set-upstream origin misaka
+
+      - name: Sync branch
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
           source_repo: "https://github.com/limoruirui/misaka"
-          source_branch: "main"
+          source_branch: "master"
           destination_branch: "misaka"
           github_token: ${{ secrets.PAT }}
