@@ -1,0 +1,39 @@
+name: iptv
+on:
+  schedule:
+    - cron: '23 8 * * *'
+  workflow_dispatch:
+  watch:
+    types: started
+  repository_dispatch:
+    types: sync-iptv
+jobs:
+  repo-sync:
+    env:
+      PAT: ${{ secrets.PAT }}
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Create new branch
+        uses: actions/github-script@v6
+        with:
+          script: |
+            await github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/heads/iptv',
+              sha: context.sha
+            });
+
+      - name: sync iptv
+        uses: repo-sync/github-sync@v2
+        if: env.PAT
+        with:
+          source_repo: "https://github.com/iptv-org/iptv"
+          source_branch: "main"
+          destination_branch: "iptv"
+          github_token: ${{ secrets.PAT }}

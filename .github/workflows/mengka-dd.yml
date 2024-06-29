@@ -1,0 +1,39 @@
+name: dd
+on:
+  schedule:
+    - cron: '27 8 * * *'
+  workflow_dispatch:
+  watch:
+    types: started
+  repository_dispatch:
+    types: sync-mengka-dd
+jobs:
+  repo-sync:
+    env:
+      PAT: ${{ secrets.PAT }}
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Create new branch
+        uses: actions/github-script@v6
+        with:
+          script: |
+            await github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/heads/dd',
+              sha: context.sha
+            });
+
+      - name: sync mengka-dd
+        uses: repo-sync/github-sync@v2
+        if: env.PAT
+        with:
+          source_repo: "https://github.com/veip007/dd"
+          source_branch: "main"
+          destination_branch: "mengka-dd"
+          github_token: ${{ secrets.PAT }}

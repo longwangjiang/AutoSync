@@ -1,0 +1,39 @@
+name: better-cloudflare-ip
+on:
+  schedule:
+    - cron: '20 6 * * *'
+  workflow_dispatch:
+  watch:
+    types: started
+  repository_dispatch:
+    types: sync-better-cloudflare-ip
+jobs:
+  repo-sync:
+    env:
+      PAT: ${{ secrets.PAT }}
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Create new branch
+        uses: actions/github-script@v6
+        with:
+          script: |
+            await github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/heads/better-cloudflare-ip',
+              sha: context.sha
+            });
+
+      - name: sync better-cloudflare-ip
+        uses: repo-sync/github-sync@v2
+        if: env.PAT
+        with:
+          source_repo: "https://github.com/badafans/better-cloudflare-ip"
+          source_branch: "main"
+          destination_branch: "better-cloudflare-ip"
+          github_token: ${{ secrets.PAT }}

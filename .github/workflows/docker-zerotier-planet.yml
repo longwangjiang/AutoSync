@@ -1,0 +1,39 @@
+name: docker-zerotier-planet
+on:
+  schedule:
+    - cron: '20 10 * * *'
+  workflow_dispatch:
+  watch:
+    types: started
+  repository_dispatch:
+    types: sync-docker-zerotier-planet
+jobs:
+  repo-sync:
+    env:
+      PAT: ${{ secrets.PAT }}
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Create new branch
+        uses: actions/github-script@v6
+        with:
+          script: |
+            await github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/heads/docker-zerotier-planet',
+              sha: context.sha
+            });
+
+      - name: sync docker-zerotier-planet
+        uses: repo-sync/github-sync@v2
+        if: env.PAT
+        with:
+          source_repo: "https://github.com/xubiaolin/docker-zerotier-planet"
+          source_branch: "main"
+          destination_branch: "docker-zerotier-planet"
+          github_token: ${{ secrets.PAT }}
