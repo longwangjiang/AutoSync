@@ -1,7 +1,7 @@
 name: bin456789-reinstall
 on:
   schedule:
-    - cron: '1 6 * * *'
+    - cron: '4 13 * * *'
   workflow_dispatch:
   repository_dispatch:
     types: sync-bin456789-reinstall
@@ -42,6 +42,6 @@ jobs:
         if: env.PAT
         with:
           source_repo: "https://github.com/bin456789/reinstall"
-          source_branch: "master"
+          source_branch: "main"
           destination_branch: "bin456789-reinstall"
           github_token: ${{ secrets.PAT }}
