@@ -1,10 +1,8 @@
 name: ProxySU
 on:
   schedule:
-    - cron: '35 8 * * *'
+    - cron: '33 9 * * *'
   workflow_dispatch:
-  watch:
-    types: started
   repository_dispatch:
     types: sync-ProxySU
 jobs:
@@ -14,26 +12,36 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout the repository
+        uses: actions/checkout@v2
         with:
           persist-credentials: false
 
-      - name: Create new branch
-        uses: actions/github-script@v6
-        with:
-          script: |
-            await github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: 'refs/heads/ProxySU',
-              sha: context.sha
-            });
+      - name: Check if branch exists
+        id: check_branch
+        run: |
+          if git show-ref --verify --quiet refs/heads/ProxySU; then
+            echo "branch_exists=true" >> $GITHUB_ENV
+          else:
+            echo "branch_exists=false" >> $GITHUB_ENV
+          fi
 
-      - name: sync ProxySU
+      - name: Delete existing branch
+        if: ${{ env.branch_exists == 'true' }}
+        run: |
+          git push origin --delete ProxySU
+
+      - name: Create new branch
+        if: ${{ env.branch_exists == 'false' }}
+        run: |
+          git checkout -b ProxySU
+          git push --set-upstream origin ProxySU
+
+      - name: Sync branch
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
           source_repo: "https://github.com/proxysu/ProxySU"
-          source_branch: "main"
+          source_branch: "master"
           destination_branch: "ProxySU"
           github_token: ${{ secrets.PAT }}
