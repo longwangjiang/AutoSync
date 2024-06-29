@@ -1,7 +1,7 @@
 name: better-cloudflare-ip
 on:
   schedule:
-    - cron: '43 17 * * *'
+    - cron: '36 17 * * *'
   workflow_dispatch:
   repository_dispatch:
     types: sync-better-cloudflare-ip
@@ -12,7 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout the repository
+        uses: actions/checkout@v2
         with:
           persist-credentials: false
 
@@ -31,9 +32,10 @@ jobs:
           git push origin --delete better-cloudflare-ip
 
       - name: Create new branch
+        if: ${{ env.branch_exists == 'false' }}
         run: |
-          git checkout -b better-cloudflare-ip || git checkout better-cloudflare-ip
-          git push origin better-cloudflare-ip
+          git checkout -b better-cloudflare-ip
+          git push --set-upstream origin better-cloudflare-ip
 
       - name: Sync branch
         uses: repo-sync/github-sync@v2
